@@ -4,342 +4,67 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>🐱✨ 소비요정의 브레이크 마법</title>
-
   <style>
     :root{
-      --pink:#ff4f87;
-      --lav:#c76bff;
-      --bg1:#fff0f6;
-      --bg2:#f5e9ff;
-      --card:#ffffff;
-      --line:#ffe0ef;
-      --text:#3a3a3a;
-      --muted:#777;
-      --ok:#1f8f50;
-      --bad:#ff4f87;
-      font-family: "Apple SD Gothic Neo", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans KR", sans-serif;
+      --pink:#ff4f87; --lav:#c76bff; --bg1:#fff0f6; --bg2:#f5e9ff;
+      --card:#fff; --line:#ffe0ef; --text:#3a3a3a; --muted:#777;
+      --ok:#1f8f50; --bad:#ff4f87;
+      font-family:"Apple SD Gothic Neo",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans KR",sans-serif;
     }
-
-    body{
-      margin:0;
-      color:var(--text);
-      background: linear-gradient(135deg, var(--bg1), var(--bg2));
-      min-height:100vh;
-    }
-
-    .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .card{
-      background: var(--card);
-      border-radius: 28px;
-      box-shadow: 0 16px 44px rgba(255,79,135,.16);
-      padding: 22px;
-      border: 1px solid rgba(255, 224, 239, .9);
-    }
-
-    .topbar{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      margin-bottom: 10px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .logo{
-      width:46px; height:46px;
-      border-radius: 18px;
-      background: radial-gradient(circle at 30% 30%, #fff, #ffe4f2 45%, #fce4ff);
-      border: 1px solid var(--line);
-      display:flex; align-items:center; justify-content:center;
-      box-shadow: 0 10px 26px rgba(255, 79, 135, 0.14);
-      user-select:none;
-      font-size: 22px;
-    }
-
-    h1{
-      margin:0;
-      font-size: 22px;
-      line-height:1.15;
-      color: var(--pink);
-    }
-
-    .sub{
-      margin-top: 2px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .cta{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
-
-    .btn{
-      border:0;
-      cursor:pointer;
-      border-radius: 18px;
-      padding: 12px 14px;
-      font-weight:800;
-      color:#fff;
-      background: linear-gradient(135deg, var(--pink), var(--lav));
-      box-shadow: 0 12px 30px rgba(199,107,255,.18);
-      transition: transform .15s ease;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      user-select:none;
-    }
-
-    .btn:hover{ transform: translateY(-1px) scale(1.02); }
-
-    .btn.ghost{
-      background: #fff;
-      color: var(--pink);
-      border: 1px solid var(--line);
-      box-shadow:none;
-      font-weight:800;
-    }
-
-    .bubble{
-      margin-top: 14px;
-      background: #ffe4f2;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 12px 14px;
-      box-shadow: 0 10px 26px rgba(255, 79, 135, 0.12);
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-    }
-
-    .bubble .cat{
-      width:38px; height:38px;
-      border-radius: 16px;
-      background: #fff;
-      border: 1px solid var(--line);
-      display:flex; align-items:center; justify-content:center;
-      font-size: 20px;
-      flex: 0 0 auto;
-    }
-
-    .bubble .text{
-      font-size: 14px;
-      color:#555;
-      line-height:1.35;
-    }
-
-    .tabs{
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin: 16px 0 8px;
-    }
-
-    .tab{
-      border:0;
-      background:#fce4ff;
-      color:#b85fc6;
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-weight: 900;
-      cursor:pointer;
-      transition: .15s ease;
-      user-select:none;
-    }
-
-    .tab.active{
-      background: var(--pink);
-      color: #fff;
-    }
-
-    .section-title{
-      font-size: 16px;
-      margin: 16px 0 8px;
-      color:#4a4a4a;
-    }
-
-    .muted{
-      color: var(--muted);
-      font-size: 12px;
-      line-height:1.35;
-    }
-
-    .row{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    @media (max-width: 720px){
-      .row{ grid-template-columns: 1fr; }
-      .cta{ justify-content:flex-start; }
-    }
-
-    label{
-      display:block;
-      font-size: 12px;
-      color:#444;
-      margin: 10px 0 6px;
-      font-weight: 700;
-    }
-
-    input, select{
-      width:100%;
-      padding: 11px 12px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: #fff9fc;
-      font-size: 14px;
-      outline: none;
-    }
-
-    input:focus, select:focus{
-      border-color: rgba(255,79,135,.55);
-      box-shadow: 0 0 0 3px rgba(255,79,135,.12);
-    }
-
-    .actions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top: 12px;
-    }
-
-    .kpis{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    @media (max-width: 720px){
-      .kpis{ grid-template-columns: 1fr; }
-    }
-
-    .kpi{
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 12px;
-    }
-
-    .kpi .k{
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .kpi .v{
-      margin-top: 6px;
-      font-size: 18px;
-      font-weight: 900;
-      color:#333;
-    }
-
-    .pill{
-      display:inline-block;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #fff;
-      font-size: 12px;
-      font-weight: 800;
-      color: #ff4f87;
-    }
-
-    table{
-      width:100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      background:#fff;
-      border-radius: 18px;
-      overflow:hidden;
-      border: 1px solid var(--line);
-    }
-
-    th, td{
-      padding: 10px;
-      border-bottom: 1px solid rgba(255, 224, 239, .8);
-      font-size: 13px;
-      vertical-align: top;
-    }
-
-    th{
-      text-align:left;
-      color:#666;
-      font-size: 12px;
-      background: #fff5fb;
-    }
-
-    tr:last-child td{ border-bottom: 0; }
-
-    .right{ text-align:right; }
-
-    .danger{ color: var(--bad); font-weight: 900; }
-    .ok{ color: var(--ok); font-weight: 900; }
-
-    .note{
-      background: #faf6ff;
-      border: 1px dashed rgba(199,107,255,.35);
-      border-radius: 18px;
-      padding: 12px;
-      color:#555;
-      font-size: 13px;
-      line-height:1.4;
-    }
-
-    /* fairy toast */
-    .fairy-toast{
-      position: sticky;
-      top: 12px;
-      z-index: 50;
-      margin: 0 auto 14px;
-      max-width: 860px;
-      background: rgba(255,255,255,0.92);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 12px 14px;
-      box-shadow: 0 10px 26px rgba(255, 79, 135, 0.15);
-      backdrop-filter: blur(8px);
-    }
-    .fairy-toast-title{
-      font-weight: 900;
-      color: var(--pink);
-      margin-bottom: 4px;
-      font-size: 13px;
-    }
-    .fairy-toast-msg{
-      color: #555;
-      font-size: 14px;
-      line-height: 1.35;
-    }
-
-    /* tiny footer */
-    .footer{
-      margin-top: 14px;
-      text-align:center;
-      font-size: 12px;
-      color:#888;
+    body{margin:0;color:var(--text);background:linear-gradient(135deg,var(--bg1),var(--bg2));min-height:100vh;}
+    .wrap{max-width:980px;margin:0 auto;padding:20px;}
+    .card{background:var(--card);border-radius:28px;box-shadow:0 16px 44px rgba(255,79,135,.16);padding:22px;border:1px solid rgba(255,224,239,.9);}
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px;}
+    .brand{display:flex;align-items:center;gap:10px;}
+    .logo{width:46px;height:46px;border-radius:18px;background:radial-gradient(circle at 30% 30%,#fff,#ffe4f2 45%,#fce4ff);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(255,79,135,.14);user-select:none;font-size:22px;}
+    h1{margin:0;font-size:22px;line-height:1.15;color:var(--pink);}
+    .sub{margin-top:2px;font-size:13px;color:var(--muted);}
+    .cta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end;}
+    .btn{border:0;cursor:pointer;border-radius:18px;padding:12px 14px;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--pink),var(--lav));box-shadow:0 12px 30px rgba(199,107,255,.18);transition:transform .15s ease;text-decoration:none;display:inline-flex;align-items:center;gap:8px;user-select:none;}
+    .btn:hover{transform:translateY(-1px) scale(1.02);}
+    .btn.ghost{background:#fff;color:var(--pink);border:1px solid var(--line);box-shadow:none;}
+    .bubble{margin-top:14px;background:#ffe4f2;border:1px solid var(--line);border-radius:22px;padding:12px 14px;box-shadow:0 10px 26px rgba(255,79,135,.12);display:flex;gap:10px;align-items:flex-start;}
+    .bubble .cat{width:38px;height:38px;border-radius:16px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto;}
+    .bubble .text{font-size:14px;color:#555;line-height:1.35;}
+    .tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0 8px;}
+    .tab{border:0;background:#fce4ff;color:#b85fc6;padding:10px 16px;border-radius:999px;font-weight:900;cursor:pointer;transition:.15s ease;user-select:none;}
+    .tab.active{background:var(--pink);color:#fff;}
+    .section-title{font-size:16px;margin:16px 0 8px;color:#4a4a4a;}
+    .muted{color:var(--muted);font-size:12px;line-height:1.35;}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    @media (max-width:720px){.row{grid-template-columns:1fr}.cta{justify-content:flex-start}}
+    label{display:block;font-size:12px;color:#444;margin:10px 0 6px;font-weight:700;}
+    input,select{width:100%;padding:11px 12px;border-radius:16px;border:1px solid var(--line);background:#fff9fc;font-size:14px;outline:none;}
+    input:focus,select:focus{border-color:rgba(255,79,135,.55);box-shadow:0 0 0 3px rgba(255,79,135,.12);}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;}
+    @media (max-width:720px){.kpis{grid-template-columns:1fr}}
+    .kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;}
+    .kpi .k{color:var(--muted);font-size:12px;font-weight:700;}
+    .kpi .v{margin-top:6px;font-size:18px;font-weight:900;color:#333;}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:900;color:var(--pink);}
+    table{width:100%;border-collapse:collapse;margin-top:10px;background:#fff;border-radius:18px;overflow:hidden;border:1px solid var(--line);}
+    th,td{padding:10px;border-bottom:1px solid rgba(255,224,239,.8);font-size:13px;vertical-align:top;}
+    th{text-align:left;color:#666;font-size:12px;background:#fff5fb;}
+    tr:last-child td{border-bottom:0;}
+    .right{text-align:right;}
+    .danger{color:var(--bad);font-weight:900;}
+    .ok{color:var(--ok);font-weight:900;}
+    .note{background:#faf6ff;border:1px dashed rgba(199,107,255,.35);border-radius:18px;padding:12px;color:#555;font-size:13px;line-height:1.4;}
+    .fairy-toast{position:sticky;top:12px;z-index:50;margin:0 auto 14px;max-width:860px;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:18px;padding:12px 14px;box-shadow:0 10px 26px rgba(255,79,135,.15);backdrop-filter:blur(8px);}
+    .fairy-toast-title{font-weight:900;color:var(--pink);margin-bottom:4px;font-size:13px;}
+    .fairy-toast-msg{color:#555;font-size:14px;line-height:1.35;}
+    .footer{margin-top:14px;text-align:center;font-size:12px;color:#888;}
+    .lock{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:22px;padding:14px;margin-top:10px;}
+    /* print (무료는 버튼 잠금이라 큰 의미 없음) */
+    @media print{
+      body{background:#fff;}
+      .tabs,.cta,.bubble,.footer,#fairyToast{display:none !important;}
+      .card{box-shadow:none;border:0;}
+      .wrap{padding:0;max-width:none;}
     }
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <div id="fairyToast" class="fairy-toast" style="display:none;">
@@ -356,105 +81,66 @@
             <div class="sub">💖 공주님의 충동 소비를 막아드려요 · 결제 전에 후회 확률부터 확인!</div>
           </div>
         </div>
-
         <div class="cta">
-          <!-- ✅ 여기에 크리에이터링크 결제 링크를 넣으면 됨 -->
-          <a class="btn" href="https://example.com" target="_blank" rel="noreferrer">👑 정식버전 4,900원</a>
+          <a class="btn" id="payBtn" href="#" target="_blank" rel="noreferrer">👑 프리미엄 4,900원</a>
           <button class="btn ghost" id="resetAll" type="button">🧼 전체 초기화</button>
         </div>
       </div>
 
       <div class="bubble">
         <div class="cat">🐾</div>
-        <div class="text">
-          <b>소비요정 고양이</b>가 말해요:<br>
-          “공주님… <b>결제 버튼</b> 누르기 전에 <b>후회 점수</b>부터 확인해요!”
-        </div>
+        <div class="text"><b>소비요정</b>: “공주님… 결제 전에 <b>10초 체크</b>만 해도 후회가 줄어들어요!”</div>
       </div>
 
       <div class="tabs">
         <button class="tab active" type="button" data-tab="diagnosis">✨ 진단</button>
         <button class="tab" type="button" data-tab="log">🧾 기록</button>
         <button class="tab" type="button" data-tab="report">📊 리포트</button>
+        <button class="tab" type="button" data-tab="check">⏱ 10초 체크(프리미엄)</button>
       </div>
 
-      <!-- 진단 -->
       <section id="diagnosis">
-        <div class="section-title">✨ 충동 소비 진단 (10문항)</div>
-        <div class="muted">각 문항 1~5점 (1=전혀 아니다, 5=매우 그렇다). 결과는 “공주님의 소비 성향”으로 알려드려요.</div>
+        <div class="section-title">✨ 충동 소비 진단</div>
+        <div class="muted">간단히 성향을 확인하고, 기록/리포트로 패턴을 잡아보세요.</div>
         <div id="qList"></div>
-
         <div class="actions">
           <button class="btn" id="calcType" type="button">🐱 결과 보기</button>
-          <button class="btn ghost" id="goLog" type="button">🧾 기록하러 가기</button>
         </div>
-
         <div id="typeResult" style="margin-top:12px;"></div>
       </section>
 
-      <!-- 기록 -->
       <section id="log" style="display:none;">
         <div class="section-title">🧾 소비 기록</div>
-        <div class="muted">후회 점수 = (5-만족도)+(5-필요도). <b>6 이상</b>이면 “후회 가능성 높음”이에요.</div>
+        <div class="muted">후회 점수 = (5-만족도)+(5-필요도). <b>6 이상</b>이면 “후회 가능성 높음”.</div>
 
         <div class="row">
-          <div>
-            <label>날짜</label>
-            <input id="dDate" type="date" />
-          </div>
-          <div>
-            <label>항목</label>
-            <input id="dItem" placeholder="예: 배달, 커피, 립스틱, 택시" />
-          </div>
+          <div><label>날짜</label><input id="dDate" type="date" /></div>
+          <div><label>항목</label><input id="dItem" placeholder="예: 배달, 커피, 립스틱" /></div>
         </div>
-
         <div class="row">
-          <div>
-            <label>금액(원)</label>
-            <input id="dAmount" type="number" min="0" step="100" placeholder="예: 12900" />
-          </div>
-          <div>
-            <label>카테고리</label>
+          <div><label>금액(원)</label><input id="dAmount" type="number" min="0" step="100" placeholder="예: 12900" /></div>
+          <div><label>카테고리</label>
             <select id="dCategory">
-              <option value="식비">식비</option>
-              <option value="카페/간식">카페/간식</option>
-              <option value="교통">교통</option>
-              <option value="쇼핑">쇼핑</option>
-              <option value="생활">생활</option>
-              <option value="건강">건강</option>
-              <option value="구독">구독</option>
-              <option value="기타" selected>기타</option>
+              <option value="식비">식비</option><option value="카페/간식">카페/간식</option><option value="교통">교통</option>
+              <option value="쇼핑">쇼핑</option><option value="생활">생활</option><option value="건강">건강</option>
+              <option value="구독">구독</option><option value="기타" selected>기타</option>
             </select>
           </div>
         </div>
-
         <div class="row">
-          <div>
-            <label>감정</label>
+          <div><label>감정</label>
             <select id="dEmotion">
-              <option value="스트레스">스트레스</option>
-              <option value="지루함">지루함</option>
-              <option value="설렘">설렘</option>
-              <option value="보상">보상</option>
-              <option value="비교">비교</option>
-              <option value="필요">필요</option>
-              <option value="습관">습관</option>
+              <option value="스트레스">스트레스</option><option value="지루함">지루함</option><option value="설렘">설렘</option>
+              <option value="보상">보상</option><option value="비교">비교</option><option value="필요">필요</option><option value="습관">습관</option>
             </select>
           </div>
-          <div>
-            <label>만족도 (1~5)</label>
-            <select id="dSatis">
-              <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
-            </select>
+          <div><label>만족도 (1~5)</label>
+            <select id="dSatis"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select>
           </div>
         </div>
-
         <div class="row">
-          <div>
-            <label>필요도 (1~5)</label>
-            <select id="dNeed">
-              <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
-            </select>
+          <div><label>필요도 (1~5)</label>
+            <select id="dNeed"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select>
           </div>
           <div></div>
         </div>
@@ -467,26 +153,14 @@
         <div class="section-title" style="margin-top:18px;">📌 기록 목록</div>
         <div style="overflow:auto;">
           <table>
-            <thead>
-              <tr>
-                <th>날짜</th>
-                <th>항목</th>
-                <th class="right">금액</th>
-                <th>카테고리</th>
-                <th>감정</th>
-                <th>만족/필요</th>
-                <th>후회</th>
-                <th></th>
-              </tr>
-            </thead>
+            <thead><tr><th>날짜</th><th>항목</th><th class="right">금액</th><th>카테고리</th><th>감정</th><th>만족/필요</th><th>후회</th><th></th></tr></thead>
             <tbody id="logTbody"></tbody>
           </table>
         </div>
       </section>
 
-      <!-- 리포트 -->
       <section id="report" style="display:none;">
-        <div class="section-title">📊 공주님의 이번 달 후회 리포트</div>
+        <div class="section-title">📊 이번 달 후회 리포트</div>
 
         <div class="row" style="margin-top:10px;">
           <div>
@@ -495,116 +169,103 @@
             <div class="muted">기본은 이번 달이에요.</div>
           </div>
           <div style="display:flex; align-items:flex-end; gap:8px; flex-wrap:wrap;">
-            <button class="btn ghost" id="btnDownloadCsv" type="button" style="width:auto;">⬇ CSV 다운로드</button>
-            <button class="btn" id="goLog2" type="button" style="width:auto;">🧾 기록 추가하기</button>
+            <button class="btn ghost" id="btnDownloadCsv" type="button" style="width:auto;">⬇ CSV</button>
+            <button class="btn ghost" id="btnSavePdf" type="button" style="width:auto;">🖨 리포트 PDF(프리미엄)</button>
           </div>
         </div>
 
         <div class="kpis" id="kpis"></div>
 
         <div class="section-title">🐾 감정 TOP</div>
-        <div id="emotionTop" class="note">기록을 추가하면 소비요정이 분석해드려요.</div>
+        <div id="emotionTop" class="note">기록을 추가하면 분석돼요.</div>
 
         <div class="section-title">🎀 카테고리 TOP</div>
-        <div id="categoryTop" class="note">기록을 추가하면 소비요정이 분석해드려요.</div>
+        <div id="categoryTop" class="note">기록을 추가하면 분석돼요.</div>
 
-        <div class="section-title">👑 다음 달 공주님 전략</div>
+        <div class="section-title">👑 다음 달 전략</div>
         <div id="strategy" class="note"></div>
+
+        <div class="lock" id="premiumUpsell">
+          <div style="font-weight:900;color:var(--pink);margin-bottom:6px;">👑 프리미엄 기능</div>
+          <div class="muted" style="margin-bottom:10px;">
+            ✔ 결제 전 10초 체크(즉시 차단)<br>
+            ✔ 예쁜 월간 리포트 PDF 저장
+          </div>
+          <a class="btn" id="payBtn2" href="#" target="_blank" rel="noreferrer">프리미엄 열기 4,900원</a>
+        </div>
       </section>
 
-      <div class="footer">🐱✨ “공주님, 돈은 공주님의 편이에요. 우리가 브레이크만 잡아주면 돼요.”</div>
+      <section id="check" style="display:none;">
+        <div class="section-title">⏱ 결제 전 10초 체크 (프리미엄)</div>
+        <div class="note">
+          이 기능은 <b>프리미엄 전용</b>이에요.<br>
+          “결제하기” 누르기 전에 4문항만 체크하면 소비요정이 <b>GO / WAIT / STOP</b>로 판정해드려요.
+          <div style="margin-top:10px;">
+            <a class="btn" id="payBtn3" href="#" target="_blank" rel="noreferrer">👑 프리미엄 열기 4,900원</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">🐱✨ “공주님, 돈은 공주님의 편이에요.”</div>
     </div>
   </div>
 
 <script>
+  // ====== 설정(무료) ======
+  const IS_PREMIUM = false;
+  const PAY_LINK = "https://여기에_크리에이터링크_결제URL"; // ✅ 여기만 바꾸기
+
   // ===== storage =====
-  const KEY = "spend_fairy_v1";
+  const KEY = "spend_fairy_v2_free";
   const state = load() ?? { answers: Array(10).fill(3), logs: [], uiMonth: "" };
 
   function load(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } }
   function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
-
-  // ===== helpers =====
   const $ = (id)=>document.getElementById(id);
+
+  // links
+  ["payBtn","payBtn2","payBtn3"].forEach(id=>{ const el=$(id); if(el) el.href = PAY_LINK; });
 
   const today = new Date();
   const iso = new Date(today.getTime() - today.getTimezoneOffset()*60000).toISOString().slice(0,10);
 
-  function formatWon(n){
-    try { return Number(n).toLocaleString("ko-KR") + "원"; }
-    catch { return String(n) + "원"; }
-  }
+  function formatWon(n){ try { return Number(n).toLocaleString("ko-KR")+"원"; } catch { return n+"원"; } }
+  function escapeHtml(s){ return String(s??"").replace(/[&<>"']/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
+  function regretScore(satis, need){ return (5-Number(satis)) + (5-Number(need)); }
+  function getYYYYMM(dateStr){ return (dateStr && dateStr.length>=7) ? dateStr.slice(0,7) : ""; }
 
-  function escapeHtml(s){
-    return String(s ?? "").replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
-  }
-
-  function regretScore(satis, need){
-    return (5-Number(satis)) + (5-Number(need));
-  }
-
-  function getYYYYMM(dateStr){
-    return (dateStr && dateStr.length>=7) ? dateStr.slice(0,7) : "";
-  }
-
-  // ===== fairy toast =====
-  let toastTimer = null;
+  // toast
+  let toastTimer=null;
   function showFairyToast(message){
-    const box = $("fairyToast");
-    const msg = $("fairyToastMsg");
-    if(!box || !msg) return;
-    msg.innerHTML = message;
-    box.style.display = "block";
+    const box=$("fairyToast"), msg=$("fairyToastMsg");
+    if(!box||!msg) return;
+    msg.innerHTML=message;
+    box.style.display="block";
     if(toastTimer) clearTimeout(toastTimer);
-    toastTimer = setTimeout(()=>{ box.style.display = "none"; }, 3800);
+    toastTimer=setTimeout(()=>{box.style.display="none";},3600);
   }
 
   function fairyCommentByScore(score, category, emotion){
-    if(score >= 8){
-      return `🚨 공주님!!! 이건 후회 대폭발 예감…<br><b>후회 점수 ${score}</b> 💔<br>48시간만 보류하고 내일 다시 봐요!`;
-    }
-    if(score >= 6){
-      return `⚠️ 공주님 잠깐만요!<br><b>후회 점수 ${score}</b> 이에요.<br><span class="pill">${escapeHtml(category)}</span> + <span class="pill">${escapeHtml(emotion)}</span> 조합이면 충동 확률이 올라가요 🐾`;
-    }
-    if(score <= 2){
-      return `👑 오늘 공주님 통제력 만렙!<br><b>후회 점수 ${score}</b> ✅<br>소비요정이 박수치고 있어요 👏🐱✨`;
-    }
-    return `🐱 “음… 나쁘진 않아요 공주님!”<br><b>후회 점수 ${score}</b> 정도면 괜찮은 소비일 가능성이 커요 💗`;
+    if(score>=8) return `🚨 공주님!!! <b>후회 점수 ${score}</b> 💔<br>48시간 보류하고 내일 다시 봐요!`;
+    if(score>=6) return `⚠️ 공주님 잠깐! <b>후회 점수 ${score}</b><br><span class="pill">${escapeHtml(category)}</span> + <span class="pill">${escapeHtml(emotion)}</span> 조합이면 충동 확률↑ 🐾`;
+    if(score<=2) return `👑 오늘 통제력 만렙! <b>후회 점수 ${score}</b> ✅<br>요정이 박수치고 있어요 👏🐱✨`;
+    return `🐱 “나쁘지 않아요 공주님!” <b>후회 점수 ${score}</b> 💗`;
   }
 
-  // ===== tabs =====
+  // tabs
   document.querySelectorAll(".tab").forEach(btn=>{
     btn.addEventListener("click", ()=>{
       document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
       btn.classList.add("active");
-      const tab = btn.dataset.tab;
-      ["diagnosis","log","report"].forEach(id=>{
-        document.getElementById(id).style.display = (id===tab) ? "block" : "none";
-      });
+      const tab=btn.dataset.tab;
+      ["diagnosis","log","report","check"].forEach(id=>{ document.getElementById(id).style.display = (id===tab)?"block":"none"; });
       if(tab==="log") renderLogs();
       if(tab==="report") renderReport();
+      if(tab==="check") showFairyToast("🔒 10초 체크는 프리미엄 전용이에요, 공주님!");
     });
   });
 
-  $("goLog")?.addEventListener("click", ()=>{
-    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
-    document.querySelector('.tab[data-tab="log"]')?.classList.add("active");
-    $("diagnosis").style.display="none";
-    $("report").style.display="none";
-    $("log").style.display="block";
-    renderLogs();
-  });
-
-  $("goLog2")?.addEventListener("click", ()=>{
-    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
-    document.querySelector('.tab[data-tab="log"]')?.classList.add("active");
-    $("diagnosis").style.display="none";
-    $("report").style.display="none";
-    $("log").style.display="block";
-    renderLogs();
-  });
-
-  // ===== diagnosis =====
+  // diagnosis questions
   const questions = [
     { text:"스트레스를 받으면 소비로 기분을 푼다.", map:{R:1,E:1}},
     { text:"필요하지 않으면 웬만하면 사지 않는다.", map:{S:1,G:0.5}},
@@ -617,19 +278,17 @@
     { text:"지루하면 쇼핑/배달앱을 켠다.", map:{E:1,R:0.5}},
     { text:"목표가 있으면 소비도 그 목표에 맞춘다.", map:{G:1,S:0.5}},
   ];
-
-  const typeName = {R:"💎 보상형", S:"🌿 안정형", E:"🌊 감정형", G:"🎯 목표형"};
-  const typeDesc = {
-    R:"피곤/스트레스 상황에서 결제가 늘어요. 공주님은 ‘48시간 보류’가 제일 잘 먹혀요.",
-    S:"계획형 공주님! 다만 필요 소비까지 억누를 수 있어요. ‘정해진 예산 안’이면 OK!",
-    E:"기분/상황에 따라 소비가 흔들릴 수 있어요. 감정 TOP을 잡으면 바로 좋아져요.",
-    G:"목표 중심 공주님! 도구/학습 지출이 몰릴 수 있어요. 카테고리 편중을 점검해요."
+  const typeName={R:"💎 보상형",S:"🌿 안정형",E:"🌊 감정형",G:"🎯 목표형"};
+  const typeDesc={
+    R:"피곤/스트레스 때 결제가 늘어요. ‘48시간 보류’가 제일 잘 먹혀요.",
+    S:"계획형 공주님! 다만 필요 소비까지 억누를 수 있어요. 예산 안이면 OK.",
+    E:"기분에 따라 소비가 흔들려요. 감정 TOP만 잡아도 확 좋아져요.",
+    G:"목표 중심 공주님! 특정 카테고리 쏠림만 점검하면 안정적이에요."
   };
-
-  const qList = $("qList");
-  questions.forEach((q, i)=>{
-    const div = document.createElement("div");
-    div.style.marginTop = "10px";
+  const qList=$("qList");
+  questions.forEach((q,i)=>{
+    const div=document.createElement("div");
+    div.style.marginTop="10px";
     div.innerHTML = `
       <label>${i+1}. ${escapeHtml(q.text)}</label>
       <select data-q="${i}">
@@ -638,250 +297,176 @@
     `;
     qList.appendChild(div);
   });
-
-  qList.addEventListener("change", (e)=>{
-    const sel = e.target;
-    const idx = Number(sel.dataset.q);
-    if(Number.isFinite(idx)){
-      state.answers[idx] = Number(sel.value);
-      save();
-    }
+  qList.addEventListener("change",(e)=>{
+    const sel=e.target, idx=Number(sel.dataset.q);
+    if(Number.isFinite(idx)){ state.answers[idx]=Number(sel.value); save(); }
   });
-
   function calcType(){
-    const scores = {R:0,S:0,E:0,G:0};
-    state.answers.forEach((ans, i)=>{
-      const w = questions[i].map;
-      for(const k of Object.keys(w)){ scores[k] += ans * w[k]; }
+    const scores={R:0,S:0,E:0,G:0};
+    state.answers.forEach((ans,i)=>{
+      const w=questions[i].map;
+      for(const k of Object.keys(w)) scores[k]+=ans*w[k];
     });
-    const pairs = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+    const pairs=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
     return {scores, top1:pairs[0][0], top2:pairs[1][0]};
   }
-
-  $("calcType")?.addEventListener("click", ()=>{
-    const {scores, top1, top2} = calcType();
+  $("calcType").addEventListener("click",()=>{
+    const {scores,top1,top2}=calcType();
     $("typeResult").innerHTML = `
       <div class="note">
-        <div class="pill">공주님의 결과</div>
-        <div style="margin-top:8px; font-weight:900; font-size:16px;">
-          ${typeName[top1]} + ${typeName[top2]}
-        </div>
+        <div class="pill">공주님 결과</div>
+        <div style="margin-top:8px;font-weight:900;font-size:16px;">${typeName[top1]} + ${typeName[top2]}</div>
         <div style="margin-top:8px;">🐱 요정 코멘트: ${escapeHtml(typeDesc[top1])}</div>
         <div class="muted" style="margin-top:8px;">
-          점수: ${Object.entries(scores).map(([k,v])=>`${typeName[k]} ${v.toFixed(1)}`).join(" · ")}
+          ${Object.entries(scores).map(([k,v])=>`${typeName[k]} ${v.toFixed(1)}`).join(" · ")}
         </div>
       </div>
     `;
     showFairyToast(`🐱 공주님! <b>${typeName[top1]}</b> 기질이 강해요.<br>${escapeHtml(typeDesc[top1])}`);
   });
 
-  // ===== log input =====
-  $("dDate").value = iso;
+  // log
+  $("dDate").value=iso;
 
-  $("addRow")?.addEventListener("click", ()=>{
-    const row = {
-      date: $("dDate").value || iso,
-      item: ($("dItem").value || "").trim() || "기타",
-      amount: Number($("dAmount").value || 0),
-      category: $("dCategory").value,
-      emotion: $("dEmotion").value,
-      satis: Number($("dSatis").value),
-      need: Number($("dNeed").value)
+  $("addRow").addEventListener("click",()=>{
+    const row={
+      date:$("dDate").value||iso,
+      item:($("dItem").value||"").trim()||"기타",
+      amount:Number($("dAmount").value||0),
+      category:$("dCategory").value,
+      emotion:$("dEmotion").value,
+      satis:Number($("dSatis").value),
+      need:Number($("dNeed").value),
     };
-
-    if(!row.amount || row.amount <= 0){
-      alert("금액을 입력해 주세요!");
-      return;
-    }
-
-    state.logs.unshift(row);
-    save();
-
-    const rs = regretScore(row.satis, row.need);
-    showFairyToast(fairyCommentByScore(rs, row.category, row.emotion));
-
-    $("dItem").value = "";
-    $("dAmount").value = "";
+    if(!row.amount || row.amount<=0){ alert("금액을 입력해 주세요!"); return; }
+    state.logs.unshift(row); save();
+    const rs=regretScore(row.satis,row.need);
+    showFairyToast(fairyCommentByScore(rs,row.category,row.emotion));
+    $("dItem").value=""; $("dAmount").value="";
     renderLogs();
   });
 
-  $("clearLogs")?.addEventListener("click", ()=>{
+  $("clearLogs").addEventListener("click",()=>{
     if(confirm("기록을 모두 삭제할까요?")){
-      state.logs = [];
-      save();
-      renderLogs();
+      state.logs=[]; save(); renderLogs();
       showFairyToast("🧼 공주님, 기록을 깨끗하게 정리했어요!");
     }
   });
 
   function renderLogs(){
-    const tb = $("logTbody");
-    tb.innerHTML = "";
-
-    state.logs.forEach((r, idx)=>{
-      const rs = regretScore(r.satis, r.need);
-      const high = rs >= 6;
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
+    const tb=$("logTbody"); tb.innerHTML="";
+    state.logs.forEach((r,idx)=>{
+      const rs=regretScore(r.satis,r.need);
+      const high=rs>=6;
+      const tr=document.createElement("tr");
+      tr.innerHTML=`
         <td>${escapeHtml(r.date)}</td>
         <td>${escapeHtml(r.item)}</td>
         <td class="right">${formatWon(r.amount)}</td>
-        <td>${escapeHtml(r.category ?? "-")}</td>
-        <td>${escapeHtml(r.emotion ?? "-")}</td>
+        <td>${escapeHtml(r.category??"-")}</td>
+        <td>${escapeHtml(r.emotion??"-")}</td>
         <td>${r.satis} / ${r.need}</td>
         <td class="${high?"danger":"ok"}">${high?"높음":"낮음"} <span class="muted">(점수 ${rs})</span></td>
         <td class="right"><button class="btn ghost" data-del="${idx}" type="button" style="padding:8px 10px;border-radius:14px;">삭제</button></td>
       `;
       tb.appendChild(tr);
     });
-
     tb.querySelectorAll("button[data-del]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const i = Number(btn.dataset.del);
-        state.logs.splice(i, 1);
-        save();
-        renderLogs();
+      btn.addEventListener("click",()=>{
+        const i=Number(btn.dataset.del);
+        state.logs.splice(i,1); save(); renderLogs();
         showFairyToast("🐱 삭제 완료! 공주님 기록 깔끔~");
       });
     });
   }
 
-  // ===== report =====
+  // report
   function buildMonthOptions(){
-    const sel = $("monthSelect");
-    if(!sel) return;
-
-    const months = new Set();
-    const nowMonth = iso.slice(0,7);
+    const sel=$("monthSelect");
+    const months=new Set();
+    const nowMonth=iso.slice(0,7);
     months.add(nowMonth);
-    state.logs.forEach(r=>{
-      const m = getYYYYMM(r.date);
-      if(m) months.add(m);
-    });
-
-    const sorted = Array.from(months).sort().reverse();
-    const prev = state.uiMonth || nowMonth;
-
-    sel.innerHTML = sorted.map(m => `<option value="${m}">${m}</option>`).join("");
-    sel.value = sorted.includes(prev) ? prev : nowMonth;
-
-    state.uiMonth = sel.value;
-    save();
-
-    sel.onchange = () => {
-      state.uiMonth = sel.value;
-      save();
-      renderReport();
-    };
+    state.logs.forEach(r=>{ const m=getYYYYMM(r.date); if(m) months.add(m); });
+    const sorted=Array.from(months).sort().reverse();
+    const prev=state.uiMonth||nowMonth;
+    sel.innerHTML=sorted.map(m=>`<option value="${m}">${m}</option>`).join("");
+    sel.value=sorted.includes(prev)?prev:nowMonth;
+    state.uiMonth=sel.value; save();
+    sel.onchange=()=>{ state.uiMonth=sel.value; save(); renderReport(); };
   }
 
   function renderReport(){
     buildMonthOptions();
-    const selectedMonth = $("monthSelect")?.value || iso.slice(0,7);
-    const logs = state.logs.filter(r => getYYYYMM(r.date) === selectedMonth);
+    const selectedMonth=$("monthSelect")?.value||iso.slice(0,7);
+    const logs=state.logs.filter(r=>getYYYYMM(r.date)===selectedMonth);
 
-    const total = logs.reduce((a,r)=>a+r.amount, 0);
-    const avgSatis = logs.length ? (logs.reduce((a,r)=>a+r.satis,0)/logs.length) : 0;
-    const regretCnt = logs.filter(r=>regretScore(r.satis,r.need) >= 6).length;
-    const regretRate = logs.length ? (regretCnt/logs.length)*100 : 0;
+    const total=logs.reduce((a,r)=>a+r.amount,0);
+    const avgSatis=logs.length?(logs.reduce((a,r)=>a+r.satis,0)/logs.length):0;
+    const regretCnt=logs.filter(r=>regretScore(r.satis,r.need)>=6).length;
+    const regretRate=logs.length?(regretCnt/logs.length)*100:0;
 
-    const emoMap = {};
-    const catMap = {};
-    logs.forEach(r=>{
-      emoMap[r.emotion] = (emoMap[r.emotion]||0)+1;
-      catMap[r.category ?? "기타"] = (catMap[r.category ?? "기타"]||0)+1;
-    });
+    const emoMap={}, catMap={};
+    logs.forEach(r=>{ emoMap[r.emotion]=(emoMap[r.emotion]||0)+1; catMap[r.category]=(catMap[r.category]||0)+1; });
+    const emoTop=Object.entries(emoMap).sort((a,b)=>b[1]-a[1])[0]?.[0] ?? "-";
+    const catTop=Object.entries(catMap).sort((a,b)=>b[1]-a[1])[0]?.[0] ?? "-";
 
-    const emoTop = Object.entries(emoMap).sort((a,b)=>b[1]-a[1])[0]?.[0] ?? "-";
-    const catTop = Object.entries(catMap).sort((a,b)=>b[1]-a[1])[0]?.[0] ?? "-";
-
-    $("kpis").innerHTML = `
-      <div class="kpi">
-        <div class="k">총 지출 (${escapeHtml(selectedMonth)})</div>
-        <div class="v">${formatWon(total)}</div>
-      </div>
-      <div class="kpi">
-        <div class="k">평균 만족도</div>
-        <div class="v">${avgSatis ? avgSatis.toFixed(1) : "-"}</div>
-      </div>
-      <div class="kpi">
-        <div class="k">후회율(높음)</div>
-        <div class="v">${logs.length ? regretRate.toFixed(0)+"%" : "-"}</div>
-      </div>
+    $("kpis").innerHTML=`
+      <div class="kpi"><div class="k">총 지출 (${escapeHtml(selectedMonth)})</div><div class="v">${formatWon(total)}</div></div>
+      <div class="kpi"><div class="k">평균 만족도</div><div class="v">${avgSatis?avgSatis.toFixed(1):"-"}</div></div>
+      <div class="kpi"><div class="k">후회율(높음)</div><div class="v">${logs.length?regretRate.toFixed(0)+"%":"-"}</div></div>
     `;
 
     $("emotionTop").innerHTML = logs.length
       ? `<span class="pill">TOP</span> <b>${escapeHtml(emoTop)}</b> (${emoMap[emoTop]}회) · ${logs.length}건`
-      : "기록을 추가하면 소비요정이 분석해드려요.";
+      : "기록을 추가하면 분석돼요.";
 
     $("categoryTop").innerHTML = logs.length
       ? `<span class="pill">TOP</span> <b>${escapeHtml(catTop)}</b> (${catMap[catTop]}회) · ${logs.length}건`
-      : "기록을 추가하면 소비요정이 분석해드려요.";
+      : "기록을 추가하면 분석돼요.";
 
-    // strategy
-    const lines = [];
+    const lines=[];
     if(!logs.length){
       lines.push("공주님! 이번 달 기록이 아직 없어요. 소비 3건만 적어도 리포트가 만들어져요 💗");
-      showFairyToast(`🐱 공주님! <b>${selectedMonth}</b> 기록이 비어있어요.<br>3건만 적어도 요정이 분석해드릴게요 💖`);
     } else {
-      if(regretRate >= 35){
-        lines.push("🧨 후회율이 높아요 → 다음 달은 ‘48시간 보류 규칙’을 꼭 적용해요.");
-        showFairyToast(`🧨 공주님… 이번 달 후회 소비가 많아요!<br><b>후회율 ${regretRate.toFixed(0)}%</b> 😭<br>다음 달은 “48시간 보류”부터!`);
-      } else if(regretRate <= 10){
-        lines.push("🌸 후회율이 낮아요 → 공주님 소비 통제력 만렙! 지금 리듬을 유지해요.");
-        showFairyToast(`🌸 공주님 너무 잘했어요!<br><b>후회율 ${regretRate.toFixed(0)}%</b> ✨<br>요정이 자랑스럽다냥 🐱`);
-      } else {
-        lines.push("🐾 꽤 안정적이에요 → ‘후회 점수 6 이상’ 소비만 줄여도 체감이 커요.");
-        showFairyToast(`🐾 공주님, 꽤 안정적이에요.<br><b>후회율 ${regretRate.toFixed(0)}%</b><br>“후회점수 6 이상”만 줄여도 체감이 커요!`);
-      }
-
-      if(emoTop === "스트레스") lines.push("🧠 스트레스 소비가 TOP → 돈 대신 할 수 있는 ‘대체 행동 3가지’를 미리 정해둬요.");
-      if(emoTop === "지루함") lines.push("🫧 지루함 소비가 TOP → ‘앱 켜기 전에 5분 산책’ 같은 아주 작은 규칙을 넣어요.");
-      if(emoTop === "비교") lines.push("🪞 비교 소비가 TOP → SNS 보고 결제할 때는 ‘24시간 보류’만으로도 급감해요.");
-      if(avgSatis && avgSatis < 3) lines.push("📉 만족도가 낮아요 → 다음 달은 ‘자기만족 높은 소비’ 비율을 조금 늘려요(건강/휴식/도구).");
+      if(regretRate>=35) lines.push("🧨 후회율이 높아요 → 다음 달은 ‘48시간 보류 규칙’을 꼭 적용해요.");
+      else if(regretRate<=10) lines.push("🌸 후회율이 낮아요 → 공주님 소비 통제력 만렙! 지금 리듬 유지해요.");
+      else lines.push("🐾 꽤 안정적이에요 → ‘후회 점수 6 이상’만 줄여도 체감이 커요.");
+      if(emoTop==="스트레스") lines.push("🧠 스트레스 소비 TOP → 돈 대신 할 ‘대체 행동 3가지’를 미리 정해둬요.");
+      if(emoTop==="지루함") lines.push("🫧 지루함 소비 TOP → 앱 켜기 전에 5분만 산책/정리!");
+      if(emoTop==="비교") lines.push("🪞 비교 소비 TOP → SNS 보고 결제는 24시간 보류만 해도 급감해요.");
+      if(avgSatis && avgSatis<3) lines.push("📉 만족도가 낮아요 → 다음 달은 ‘만족 높은 소비(건강/휴식/도구)’ 비율을 늘려요.");
     }
     $("strategy").innerHTML = lines.map(t=>`<div style="margin:6px 0;">${t}</div>`).join("");
   }
 
-  // ===== CSV (Excel-safe with BOM) =====
+  // CSV (Excel-safe BOM)
   function toCsvValue(v){
-    const s = String(v ?? "");
-    if(/[",\n]/.test(s)){
-      return `"${s.replace(/"/g, '""')}"`;
-    }
+    const s=String(v??"");
+    if(/[",\n]/.test(s)) return `"${s.replace(/"/g,'""')}"`;
     return s;
   }
-
   function downloadCsv(){
-    const headers = ["date","item","amount","category","emotion","satis","need"];
-    const rows = state.logs.map(r => [
-      r.date, r.item, r.amount, (r.category ?? ""), (r.emotion ?? ""), r.satis, r.need
-    ]);
-
-    const csv = [
-      headers.join(","),
-      ...rows.map(row => row.map(toCsvValue).join(","))
-    ].join("\n");
-
-    const csvWithBom = "\ufeff" + csv;
-    const blob = new Blob([csvWithBom], {type:"text/csv;charset=utf-8;"});
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `spend-fairy-${iso}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    const headers=["date","item","amount","category","emotion","satis","need"];
+    const rows=state.logs.map(r=>[r.date,r.item,r.amount,r.category,r.emotion,r.satis,r.need]);
+    const csv=[headers.join(","),...rows.map(row=>row.map(toCsvValue).join(","))].join("\n");
+    const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8;"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download=`spend-fairy-${iso}.csv`;
+    document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(url);
-
-    showFairyToast("⬇ CSV 저장 완료! 공주님 기록은 소중하니까요 💗");
+    showFairyToast("⬇ CSV 저장 완료! 공주님 기록은 소중해요 💗");
   }
+  $("btnDownloadCsv").addEventListener("click", downloadCsv);
 
-  $("btnDownloadCsv")?.addEventListener("click", downloadCsv);
+  // premium pdf button (locked)
+  $("btnSavePdf").addEventListener("click", ()=>{
+    showFairyToast("🔒 리포트 PDF 저장은 프리미엄 전용이에요, 공주님!");
+    window.open(PAY_LINK, "_blank");
+  });
 
-  // ===== reset all =====
-  $("resetAll")?.addEventListener("click", ()=>{
+  // reset all
+  $("resetAll").addEventListener("click", ()=>{
     if(confirm("진단/기록을 모두 초기화할까요?")){
       localStorage.removeItem(KEY);
       location.reload();
