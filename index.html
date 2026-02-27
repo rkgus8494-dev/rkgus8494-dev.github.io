@@ -466,12 +466,9 @@ const logs = state.logs.filter(r => getYYYYMM(r.date) === selectedMonth);
   function escapeHtml(s){ return s.replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
 
   renderLogs();
-</script>
-</body>
-</html>
+  // ===== CSV 다운로드 =====
 function toCsvValue(v){
   const s = String(v ?? "");
-  // 쉼표/따옴표/줄바꿈 있으면 따옴표로 감싸기
   if(/[",\n]/.test(s)){
     return `"${s.replace(/"/g, '""')}"`;
   }
@@ -481,7 +478,7 @@ function toCsvValue(v){
 function downloadCsv(){
   const headers = ["date","item","amount","category","emotion","satis","need"];
   const rows = state.logs.map(r => [
-    r.date, r.item, r.amount, r.category, r.emotion, r.satis, r.need
+    r.date, r.item, r.amount, (r.category ?? ""), r.emotion, r.satis, r.need
   ]);
 
   const csv = [
@@ -501,5 +498,11 @@ function downloadCsv(){
 
   URL.revokeObjectURL(url);
 }
+
+// 버튼이 있으면 연결
 document.getElementById("btnDownloadCsv")?.addEventListener("click", downloadCsv);
+</script>
+</body>
+</html>
+
 
