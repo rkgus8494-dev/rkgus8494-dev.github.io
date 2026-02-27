@@ -460,11 +460,14 @@
     ]);
 
     const csv = [
-      headers.join(","),
-      ...rows.map(row => row.map(toCsvValue).join(","))
-    ].join("\n");
+  headers.join(","),
+  ...rows.map(row => row.map(toCsvValue).join(","))
+].join("\n");
 
-    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+// ✅ 엑셀 한글 깨짐 방지용 BOM 추가
+const csvWithBom = "\ufeff" + csv;
+
+const blob = new Blob([csvWithBom], {type:"text/csv;charset=utf-8;"});
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
@@ -492,3 +495,4 @@
 </script>
 </body>
 </html>
+
