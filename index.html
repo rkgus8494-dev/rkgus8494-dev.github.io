@@ -5,47 +5,109 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>월간 소비 점검 시스템 (Lite)</title>
   <style>
-    :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
-    body { margin: 0; background: #f6f7f9; color: #111; }
-    .wrap { max-width: 920px; margin: 0 auto; padding: 18px; }
-    .card { background: #fff; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.06); padding: 16px; }
-    h1 { font-size: 20px; margin: 0 0 10px; }
-    h2 { font-size: 16px; margin: 18px 0 10px; }
-    .tabs { display:flex; gap:10px; margin: 12px 0; flex-wrap: wrap; }
-    .tab {
-      border: 1px solid #ddd;
-      background: #f1f1f1;
-      padding: 10px 16px;
-      border-radius: 999px;
-      cursor: pointer;
-      color: #111 !important;
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 1;
-    }
-    .tab.active {
-      border-color: #111;
-      background: #111;
-      color: #fff !important;
-    }
-    .row { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 720px){ .row{ grid-template-columns:1fr; } }
-    label { display:block; font-size: 12px; margin: 10px 0 6px; color:#333; }
-    input, select { width:100%; padding: 10px; border:1px solid #ddd; border-radius: 10px; background:#fff; }
-    button { padding: 10px 12px; border-radius: 10px; border: 1px solid #111; background: #111; color:#fff; cursor:pointer; }
-    button.ghost { background:#fff; color:#111; border-color:#ddd; }
-    .muted { color:#666; font-size: 12px; }
-    .pill { display:inline-block; padding: 4px 10px; border-radius: 999px; border:1px solid #ddd; font-size: 12px; }
-    table { width:100%; border-collapse: collapse; }
-    th, td { padding: 10px; border-bottom:1px solid #eee; font-size: 13px; vertical-align: top; }
-    th { text-align:left; color:#444; font-size: 12px; }
-    .danger { color:#b00020; font-weight: 600; }
-    .ok { color:#0a7a2f; font-weight: 600; }
-    .right { text-align:right; }
-    .actions { display:flex; gap:8px; flex-wrap: wrap; margin-top: 12px; }
-    .grid3 { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
-    @media (max-width: 720px){ .grid3{ grid-template-columns:1fr; } }
-  </style>
+<style>
+:root {
+  font-family: "Apple SD Gothic Neo", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #fff5f7;
+  color: #333;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(255, 182, 193, 0.25);
+  padding: 24px;
+}
+
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.muted {
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab {
+  background: #ffe4ec;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ff4f87;
+  transition: 0.2s;
+}
+
+.tab.active {
+  background: #ff4f87;
+  color: white;
+}
+
+button {
+  background: #ff4f87;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 16px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.ghost {
+  background: #ffd6e5;
+  color: #ff4f87;
+}
+
+input, select {
+  border-radius: 14px;
+  border: 1px solid #ffd6e5;
+  padding: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 8px;
+  font-size: 13px;
+  border-bottom: 1px solid #ffe4ec;
+}
+
+.danger {
+  color: #ff4f87;
+  font-weight: bold;
+}
+
+.ok {
+  color: #4caf50;
+  font-weight: bold;
+}
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -497,5 +559,6 @@ const blob = new Blob([csvWithBom], {type:"text/csv;charset=utf-8;"});
 </script>
 </body>
 </html>
+
 
 
