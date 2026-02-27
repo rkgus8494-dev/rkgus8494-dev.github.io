@@ -11,21 +11,28 @@
     .card { background: #fff; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.06); padding: 16px; }
     h1 { font-size: 20px; margin: 0 0 10px; }
     h2 { font-size: 16px; margin: 18px 0 10px; }
-    .tabs { display:flex; gap:8px; margin: 12px 0; flex-wrap: wrap; }
-   .tab {
-  border:1px solid #ddd;
-  background:#f1f1f1;
-  padding:10px 12px;
-  border-radius:999px;
-  cursor:pointer;
-  color:#111;
-  font-weight:600;
+   .tabs { display:flex; gap:10px; margin: 12px 0; flex-wrap: wrap; }
+
+.tab {
+  border: 1px solid #ddd;
+  background: #f1f1f1;
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  /* 👇 글자 무조건 보이게 */
+  color: #111 !important;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
 }
 
 .tab.active {
-  border-color:#111;
-  background:#111;
-  color:#fff;
+  border-color: #111;
+  background: #111;
+
+  /* 👇 active일 때 흰 글자 */
+  color: #fff !important;
 }
     .row { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 720px){ .row{ grid-template-columns:1fr; } }
@@ -52,11 +59,11 @@
       <h1>월간 소비 점검 시스템 (Lite)</h1>
       <div class="muted">로그인 없이 사용 · 브라우저에 자동 저장됩니다.</div>
 
-      <div class="tabs">
-        <button class="tab active" data-tab="diagnosis">1) 진단</button>
-        <button class="tab" data-tab="log">2) 기록</button>
-        <button class="tab" data-tab="report">3) 리포트</button>
-      </div>
+<div class="tabs">
+  <button class="tab active" type="button" data-tab="diagnosis">진단</button>
+  <button class="tab" type="button" data-tab="log">기록</button>
+  <button class="tab" type="button" data-tab="report">리포트</button>
+</div>
 
       <!-- 진단 -->
       <section id="diagnosis">
@@ -367,4 +374,5 @@
 </script>
 </body>
 </html>
+
 
