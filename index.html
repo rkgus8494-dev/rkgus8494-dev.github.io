@@ -50,9 +50,11 @@
 <body>
   <div class="wrap">
     <div class="card">
-      <h1>월간 소비 점검 시스템 (Lite)</h1>
-      <div class="muted">로그인 없이 사용 · 브라우저에 자동 저장됩니다.</div>
-
+     <h1>🔥 소비 브레이크</h1>
+    <div class="muted">
+결제 전에 후회 확률부터 계산하세요.<br>
+충동 소비를 멈추는 간단한 장치
+</div>
       <div class="tabs">
         <button class="tab active" type="button" data-tab="diagnosis">1) 진단</button>
         <button class="tab" type="button" data-tab="log">2) 기록</button>
@@ -61,7 +63,7 @@
 
       <!-- 진단 -->
       <section id="diagnosis">
-        <h2>소비 가치 진단 (10문항)</h2>
+       <h2>충동 소비 진단</h2>
         <div class="muted">각 문항을 1~5점으로 체크하세요. (1=전혀 아니다, 5=매우 그렇다)</div>
         <div id="qList"></div>
 
@@ -167,7 +169,7 @@
 
       <!-- 리포트 -->
       <section id="report" style="display:none;">
-        <h2>월간 리포트</h2>
+       <h2>이번 달 후회 리포트</h2>
 
         <div class="row" style="margin-top:10px;">
           <div>
@@ -495,4 +497,5 @@ const blob = new Blob([csvWithBom], {type:"text/csv;charset=utf-8;"});
 </script>
 </body>
 </html>
+
 
