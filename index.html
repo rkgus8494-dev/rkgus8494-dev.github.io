@@ -1,49 +1,356 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>내 소비 점검 시스템</title>
-<style>
-body{font-family:system-ui;background:#f6f7f9;padding:30px}
-.card{max-width:600px;margin:auto;background:white;padding:20px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
-input,select,button{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ddd}
-button{background:#111;color:white;border:none}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>월간 소비 점검 시스템 (Lite)</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+    body { margin: 0; background: #f6f7f9; color: #111; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 18px; }
+    .card { background: #fff; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.06); padding: 16px; }
+    h1 { font-size: 20px; margin: 0 0 10px; }
+    h2 { font-size: 16px; margin: 18px 0 10px; }
+    .tabs { display:flex; gap:8px; margin: 12px 0; flex-wrap: wrap; }
+    .tab { border:1px solid #ddd; background:#fff; padding:10px 12px; border-radius: 999px; cursor:pointer; }
+    .tab.active { border-color:#111; }
+    .row { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 720px){ .row{ grid-template-columns:1fr; } }
+    label { display:block; font-size: 12px; margin: 10px 0 6px; color:#333; }
+    input, select { width:100%; padding: 10px; border:1px solid #ddd; border-radius: 10px; background:#fff; }
+    button { padding: 10px 12px; border-radius: 10px; border: 1px solid #111; background: #111; color:#fff; cursor:pointer; }
+    button.ghost { background:#fff; color:#111; border-color:#ddd; }
+    .muted { color:#666; font-size: 12px; }
+    .pill { display:inline-block; padding: 4px 10px; border-radius: 999px; border:1px solid #ddd; font-size: 12px; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom:1px solid #eee; font-size: 13px; vertical-align: top; }
+    th { text-align:left; color:#444; font-size: 12px; }
+    .danger { color:#b00020; font-weight: 600; }
+    .ok { color:#0a7a2f; font-weight: 600; }
+    .right { text-align:right; }
+    .actions { display:flex; gap:8px; flex-wrap: wrap; margin-top: 12px; }
+    .grid3 { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
+    @media (max-width: 720px){ .grid3{ grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
-<div class="card">
-<h1>월간 소비 점검 시스템</h1>
+  <div class="wrap">
+    <div class="card">
+      <h1>월간 소비 점검 시스템 (Lite)</h1>
+      <div class="muted">로그인 없이 사용 · 브라우저에 자동 저장됩니다.</div>
 
-<label>금액</label>
-<input id="amount" type="number">
+      <div class="tabs">
+        <button class="tab active" data-tab="diagnosis">1) 진단</button>
+        <button class="tab" data-tab="log">2) 기록</button>
+        <button class="tab" data-tab="report">3) 리포트</button>
+      </div>
 
-<label>만족도 (1~5)</label>
-<select id="satis">
-<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-</select>
+      <!-- 진단 -->
+      <section id="diagnosis">
+        <h2>소비 가치 진단 (10문항)</h2>
+        <div class="muted">각 문항을 1~5점으로 체크하세요. (1=전혀 아니다, 5=매우 그렇다)</div>
+        <div id="qList"></div>
 
-<label>필요도 (1~5)</label>
-<select id="need">
-<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-</select>
+        <div class="actions">
+          <button id="calcType">유형 결과 보기</button>
+          <button class="ghost" id="resetAll">전체 초기화</button>
+        </div>
 
-<button onclick="check()">후회 가능성 확인</button>
+        <div id="typeResult" style="margin-top:12px;"></div>
+      </section>
 
-<p id="result"></p>
-</div>
+      <!-- 기록 -->
+      <section id="log" style="display:none;">
+        <h2>소비 기록</h2>
+
+        <div class="row">
+          <div>
+            <label>날짜</label>
+            <input id="dDate" type="date" />
+          </div>
+          <div>
+            <label>항목</label>
+            <input id="dItem" placeholder="예: 커피, 택시, 책" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>금액(원)</label>
+            <input id="dAmount" type="number" min="0" step="100" placeholder="예: 4500" />
+          </div>
+          <div>
+            <label>감정</label>
+            <select id="dEmotion">
+              <option value="스트레스">스트레스</option>
+              <option value="지루함">지루함</option>
+              <option value="설렘">설렘</option>
+              <option value="보상">보상</option>
+              <option value="필요">필요</option>
+              <option value="습관">습관</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>만족도 (1~5)</label>
+            <select id="dSatis">
+              <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
+            </select>
+          </div>
+          <div>
+            <label>필요도 (1~5)</label>
+            <select id="dNeed">
+              <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="addRow">기록 추가</button>
+          <button class="ghost" id="clearLogs">기록 전체 삭제</button>
+        </div>
+
+        <h2 style="margin-top:18px;">기록 목록</h2>
+        <div class="muted">후회 점수 = (5-만족도) + (5-필요도) / 6 이상이면 “후회 가능성 높음”</div>
+
+        <div style="overflow:auto; margin-top:10px;">
+          <table>
+            <thead>
+              <tr>
+                <th>날짜</th>
+                <th>항목</th>
+                <th class="right">금액</th>
+                <th>감정</th>
+                <th>만족/필요</th>
+                <th>후회</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="logTbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 리포트 -->
+      <section id="report" style="display:none;">
+        <h2>월간 리포트</h2>
+        <div class="grid3" id="kpis"></div>
+
+        <h2>감정 TOP</h2>
+        <div id="emotionTop" class="muted">기록을 추가하면 표시됩니다.</div>
+
+        <h2>한 줄 전략</h2>
+        <div id="strategy" class="card" style="box-shadow:none; border:1px solid #eee; background:#fafafa;"></div>
+      </section>
+    </div>
+  </div>
 
 <script>
-function check(){
-let s = document.getElementById("satis").value;
-let n = document.getElementById("need").value;
-let score = (5-s)+(5-n);
-if(score>=6){
-document.getElementById("result").innerHTML="⚠ 후회 가능성 높음 (점수 "+score+")";
-}else{
-document.getElementById("result").innerHTML="✅ 후회 가능성 낮음 (점수 "+score+")";
-}
-}
+  const KEY = "spend_lite_v1";
+  const state = load() ?? { answers: Array(10).fill(3), logs: [] };
+
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } }
+  function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+
+  document.querySelectorAll(".tab").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      const tab = btn.dataset.tab;
+      ["diagnosis","log","report"].forEach(id=>{
+        document.getElementById(id).style.display = (id===tab) ? "block" : "none";
+      });
+      if(tab==="report") renderReport();
+      if(tab==="log") renderLogs();
+    });
+  });
+
+  const questions = [
+    { text:"스트레스를 받으면 소비로 기분을 푼다.", map:{R:1,E:1}},
+    { text:"필요하지 않으면 웬만하면 사지 않는다.", map:{S:1,G:0.5}},
+    { text:"기분이 좋을 때(설렘) 더 쉽게 결제한다.", map:{E:1,R:0.5}},
+    { text:"돈은 성장(배움/도구)에 쓰는 게 아깝지 않다.", map:{G:1}},
+    { text:"세일/한정/오늘만 같은 말에 약한 편이다.", map:{E:1,R:0.5}},
+    { text:"소비하기 전에 비교/검토를 꼼꼼히 한다.", map:{S:0.5,G:1}},
+    { text:"계획대로 쓰지 못하면 불안해진다.", map:{S:1}},
+    { text:"소비는 나에게 ‘보상’이 될 때가 많다.", map:{R:1}},
+    { text:"지루하면 쇼핑/배달앱을 켠다.", map:{E:1,R:0.5}},
+    { text:"목표가 있으면 소비도 그 목표에 맞춘다.", map:{G:1,S:0.5}},
+  ];
+
+  const qList = document.getElementById("qList");
+  questions.forEach((q, i)=>{
+    const div = document.createElement("div");
+    div.style.marginTop = "10px";
+    div.innerHTML = `
+      <label>${i+1}. ${q.text}</label>
+      <select data-q="${i}">
+        ${[1,2,3,4,5].map(v=>`<option value="${v}" ${state.answers[i]==v?"selected":""}>${v}</option>`).join("")}
+      </select>
+    `;
+    qList.appendChild(div);
+  });
+
+  qList.addEventListener("change", (e)=>{
+    const sel = e.target;
+    const idx = Number(sel.dataset.q);
+    if(Number.isFinite(idx)){
+      state.answers[idx] = Number(sel.value);
+      save();
+    }
+  });
+
+  function calcType(){
+    const scores = {R:0,S:0,E:0,G:0};
+    state.answers.forEach((ans, i)=>{
+      const w = questions[i].map;
+      for(const k of Object.keys(w)){ scores[k] += ans * w[k]; }
+    });
+    const pairs = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+    return {scores, top1:pairs[0][0], top2:pairs[1][0]};
+  }
+
+  const typeName = {R:"💎 보상형", S:"🌿 안정형", E:"🌊 감정형", G:"🎯 목표형"};
+  const typeDesc = {
+    R:"스트레스/피로 상황에서 결제가 늘어나는 편. ‘보류 규칙’이 효과적.",
+    S:"계획과 안정감을 중시. 지출을 통제하지만 때로 ‘필요한 소비’도 미룰 수 있음.",
+    E:"기분/상황에 따라 소비가 흔들릴 수 있음. 감정 트리거를 파악하면 개선이 빠름.",
+    G:"목표 중심 소비. 성장/도구/학습에 지출이 몰릴 수 있으니 예산 프레임이 도움."
+  };
+
+  document.getElementById("calcType").addEventListener("click", ()=>{
+    const {scores, top1, top2} = calcType();
+    document.getElementById("typeResult").innerHTML = `
+      <div class="card" style="box-shadow:none; border:1px solid #eee; background:#fafafa;">
+        <div class="pill">결과</div>
+        <h2 style="margin:10px 0 6px;">${typeName[top1]} + ${typeName[top2]}</h2>
+        <div class="muted">${typeDesc[top1]}</div>
+        <div class="muted" style="margin-top:6px;">보조 성향: ${typeDesc[top2]}</div>
+        <h2 style="margin:14px 0 8px;">점수</h2>
+        <div class="muted">
+          ${Object.entries(scores).map(([k,v])=>`${typeName[k]}: ${v.toFixed(1)}`).join(" · ")}
+        </div>
+      </div>
+    `;
+  });
+
+  const $ = (id)=>document.getElementById(id);
+
+  const today = new Date();
+  const iso = new Date(today.getTime() - today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  $("dDate").value = iso;
+
+  function regretScore(satis, need){ return (5-Number(satis)) + (5-Number(need)); }
+
+  $("addRow").addEventListener("click", ()=>{
+    const row = {
+      date: $("dDate").value || iso,
+      item: $("dItem").value.trim() || "기타",
+      amount: Number($("dAmount").value || 0),
+      emotion: $("dEmotion").value,
+      satis: Number($("dSatis").value),
+      need: Number($("dNeed").value)
+    };
+    if(!row.amount || row.amount < 0){ alert("금액을 입력해 주세요."); return; }
+    state.logs.unshift(row);
+    save();
+    $("dItem").value = "";
+    $("dAmount").value = "";
+    renderLogs();
+  });
+
+  $("clearLogs").addEventListener("click", ()=>{
+    if(confirm("기록을 모두 삭제할까요?")){
+      state.logs = [];
+      save();
+      renderLogs();
+    }
+  });
+
+  function renderLogs(){
+    const tb = $("logTbody");
+    tb.innerHTML = "";
+    state.logs.forEach((r, idx)=>{
+      const rs = regretScore(r.satis, r.need);
+      const high = rs >= 6;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${r.date}</td>
+        <td>${escapeHtml(r.item)}</td>
+        <td class="right">${formatWon(r.amount)}</td>
+        <td>${r.emotion}</td>
+        <td>${r.satis} / ${r.need}</td>
+        <td class="${high?"danger":"ok"}">${high?"높음":"낮음"} <span class="muted">(점수 ${rs})</span></td>
+        <td class="right"><button class="ghost" data-del="${idx}" style="padding:6px 10px;">삭제</button></td>
+      `;
+      tb.appendChild(tr);
+    });
+
+    tb.querySelectorAll("button[data-del]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const i = Number(btn.dataset.del);
+        state.logs.splice(i, 1);
+        save();
+        renderLogs();
+      });
+    });
+  }
+
+  function renderReport(){
+    const logs = state.logs;
+    const total = logs.reduce((a,r)=>a+r.amount, 0);
+    const avgSatis = logs.length ? (logs.reduce((a,r)=>a+r.satis,0)/logs.length) : 0;
+    const regretCnt = logs.filter(r=>regretScore(r.satis,r.need) >= 6).length;
+    const regretRate = logs.length ? (regretCnt/logs.length)*100 : 0;
+
+    const emoMap = {};
+    logs.forEach(r=> emoMap[r.emotion] = (emoMap[r.emotion]||0)+1 );
+    const emoTop = Object.entries(emoMap).sort((a,b)=>b[1]-a[1])[0]?.[0] ?? "-";
+
+    $("kpis").innerHTML = `
+      <div class="card" style="box-shadow:none; border:1px solid #eee;">
+        <div class="muted">총 지출</div>
+        <div style="font-size:18px; font-weight:700;">${formatWon(total)}</div>
+      </div>
+      <div class="card" style="box-shadow:none; border:1px solid #eee;">
+        <div class="muted">평균 만족도</div>
+        <div style="font-size:18px; font-weight:700;">${avgSatis ? avgSatis.toFixed(1) : "-"}</div>
+      </div>
+      <div class="card" style="box-shadow:none; border:1px solid #eee;">
+        <div class="muted">후회율(높음)</div>
+        <div style="font-size:18px; font-weight:700;">${logs.length ? regretRate.toFixed(0)+"%" : "-"}</div>
+      </div>
+    `;
+
+    $("emotionTop").innerHTML = logs.length
+      ? `<span class="pill">TOP</span> <b>${emoTop}</b> (${emoMap[emoTop]}회) · 전체 ${logs.length}건`
+      : "기록을 추가하면 표시됩니다.";
+
+    const lines = [];
+    if(!logs.length){
+      lines.push("기록이 없어요. 이번 달 소비를 3건만 적어도 리포트가 의미 있어져요.");
+    } else {
+      if(regretRate >= 25) lines.push("⚠ 후회율이 높아요 → 다음 달은 ‘48시간 보류 규칙’을 적용해보세요.");
+      if(emoTop === "스트레스") lines.push("🧠 스트레스 소비가 최다예요 → 돈 대신 할 수 있는 ‘대체 행동 3가지’를 미리 정해두세요.");
+      if(avgSatis && avgSatis < 3) lines.push("📉 만족도가 낮아요 → ‘목표형 소비(도구/학습/건강)’ 비율을 조금 늘려보세요.");
+      if(lines.length === 0) lines.push("✅ 전반적으로 안정적이에요 → 다음 달은 ‘후회 점수 6 이상’ 소비만 줄여도 체감이 커요.");
+    }
+    $("strategy").innerHTML = lines.map(t=>`<div style="margin:6px 0;">${t}</div>`).join("");
+  }
+
+  document.getElementById("resetAll").addEventListener("click", ()=>{
+    if(confirm("진단/기록을 모두 초기화할까요?")){
+      localStorage.removeItem(KEY);
+      location.reload();
+    }
+  });
+
+  function formatWon(n){ try { return Number(n).toLocaleString("ko-KR") + "원"; } catch { return n + "원"; } }
+  function escapeHtml(s){ return s.replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
+
+  renderLogs();
 </script>
 </body>
 </html>
