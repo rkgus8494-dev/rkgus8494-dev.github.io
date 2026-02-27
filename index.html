@@ -11,29 +11,23 @@
     .card { background: #fff; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,.06); padding: 16px; }
     h1 { font-size: 20px; margin: 0 0 10px; }
     h2 { font-size: 16px; margin: 18px 0 10px; }
-   .tabs { display:flex; gap:10px; margin: 12px 0; flex-wrap: wrap; }
-
-.tab {
-  border: 1px solid #ddd;
-  background: #f1f1f1;
-  padding: 10px 16px;
-  border-radius: 999px;
-  cursor: pointer;
-
-  /* 👇 글자 무조건 보이게 */
-  color: #111 !important;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 1;
-}
-
-.tab.active {
-  border-color: #111;
-  background: #111;
-
-  /* 👇 active일 때 흰 글자 */
-  color: #fff !important;
-}
+    .tabs { display:flex; gap:10px; margin: 12px 0; flex-wrap: wrap; }
+    .tab {
+      border: 1px solid #ddd;
+      background: #f1f1f1;
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      color: #111 !important;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .tab.active {
+      border-color: #111;
+      background: #111;
+      color: #fff !important;
+    }
     .row { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 720px){ .row{ grid-template-columns:1fr; } }
     label { display:block; font-size: 12px; margin: 10px 0 6px; color:#333; }
@@ -59,11 +53,11 @@
       <h1>월간 소비 점검 시스템 (Lite)</h1>
       <div class="muted">로그인 없이 사용 · 브라우저에 자동 저장됩니다.</div>
 
-<div class="tabs">
-  <button class="tab active" type="button" data-tab="diagnosis">진단</button>
-  <button class="tab" type="button" data-tab="log">기록</button>
-  <button class="tab" type="button" data-tab="report">리포트</button>
-</div>
+      <div class="tabs">
+        <button class="tab active" type="button" data-tab="diagnosis">1) 진단</button>
+        <button class="tab" type="button" data-tab="log">2) 기록</button>
+        <button class="tab" type="button" data-tab="report">3) 리포트</button>
+      </div>
 
       <!-- 진단 -->
       <section id="diagnosis">
@@ -72,8 +66,8 @@
         <div id="qList"></div>
 
         <div class="actions">
-          <button id="calcType">유형 결과 보기</button>
-          <button class="ghost" id="resetAll">전체 초기화</button>
+          <button id="calcType" type="button">유형 결과 보기</button>
+          <button class="ghost" id="resetAll" type="button">전체 초기화</button>
         </div>
 
         <div id="typeResult" style="margin-top:12px;"></div>
@@ -95,75 +89,58 @@
         </div>
 
         <div class="row">
-  <div>
-    <label>금액(원)</label>
-    <input id="dAmount" type="number" min="0" step="100" placeholder="예: 4500" />
-  </div>
-
-  <div>
-    <label>카테고리</label>
-    <select id="dCategory">
-      <option value="식비">식비</option>
-      <option value="카페/간식">카페/간식</option>
-      <option value="교통">교통</option>
-      <option value="쇼핑">쇼핑</option>
-      <option value="생활">생활</option>
-      <option value="건강">건강</option>
-      <option value="구독">구독</option>
-      <option value="기타" selected>기타</option>
-    </select>
-  </div>
-</div>
-
-<div class="row">
-  <div>
-    <label>감정</label>
-    <select id="dEmotion">
-      <option value="스트레스">스트레스</option>
-      <option value="지루함">지루함</option>
-      <option value="설렘">설렘</option>
-      <option value="보상">보상</option>
-      <option value="필요">필요</option>
-      <option value="습관">습관</option>
-    </select>
-  </div>
-
-  <div>
-    <label>만족도 (1~5)</label>
-    <select id="dSatis">
-      <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
-    </select>
-  </div>
-</div>
-
-<div class="row">
-  <div>
-    <label>필요도 (1~5)</label>
-    <select id="dNeed">
-      <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
-    </select>
-  </div>
-  <div></div>
-</div>
+          <div>
+            <label>금액(원)</label>
+            <input id="dAmount" type="number" min="0" step="100" placeholder="예: 4500" />
+          </div>
+          <div>
+            <label>카테고리</label>
+            <select id="dCategory">
+              <option value="식비">식비</option>
+              <option value="카페/간식">카페/간식</option>
+              <option value="교통">교통</option>
+              <option value="쇼핑">쇼핑</option>
+              <option value="생활">생활</option>
+              <option value="건강">건강</option>
+              <option value="구독">구독</option>
+              <option value="기타" selected>기타</option>
+            </select>
+          </div>
+        </div>
 
         <div class="row">
+          <div>
+            <label>감정</label>
+            <select id="dEmotion">
+              <option value="스트레스">스트레스</option>
+              <option value="지루함">지루함</option>
+              <option value="설렘">설렘</option>
+              <option value="보상">보상</option>
+              <option value="필요">필요</option>
+              <option value="습관">습관</option>
+            </select>
+          </div>
           <div>
             <label>만족도 (1~5)</label>
             <select id="dSatis">
               <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
             </select>
           </div>
+        </div>
+
+        <div class="row">
           <div>
             <label>필요도 (1~5)</label>
             <select id="dNeed">
               <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
             </select>
           </div>
+          <div></div>
         </div>
 
         <div class="actions">
-          <button id="addRow">기록 추가</button>
-          <button class="ghost" id="clearLogs">기록 전체 삭제</button>
+          <button id="addRow" type="button">기록 추가</button>
+          <button class="ghost" id="clearLogs" type="button">기록 전체 삭제</button>
         </div>
 
         <h2 style="margin-top:18px;">기록 목록</h2>
@@ -176,6 +153,7 @@
                 <th>날짜</th>
                 <th>항목</th>
                 <th class="right">금액</th>
+                <th>카테고리</th>
                 <th>감정</th>
                 <th>만족/필요</th>
                 <th>후회</th>
@@ -190,20 +168,25 @@
       <!-- 리포트 -->
       <section id="report" style="display:none;">
         <h2>월간 리포트</h2>
+
         <div class="row" style="margin-top:10px;">
-  <div>
-    <label>리포트 월</label>
-    <select id="monthSelect"></select>
-    <div class="muted">기본은 이번 달입니다.</div>
-  </div>
-  <div style="display:flex; align-items:flex-end; gap:8px;">
-    <button id="btnDownloadCsv" class="ghost" type="button" style="width:auto;">CSV 다운로드</button>
-  </div>
-</div>
-        <div class="grid3" id="kpis"></div>
+          <div>
+            <label>리포트 월</label>
+            <select id="monthSelect"></select>
+            <div class="muted">기본은 이번 달입니다.</div>
+          </div>
+          <div style="display:flex; align-items:flex-end; gap:8px;">
+            <button id="btnDownloadCsv" class="ghost" type="button" style="width:auto;">CSV 다운로드</button>
+          </div>
+        </div>
+
+        <div class="grid3" id="kpis" style="margin-top:10px;"></div>
 
         <h2>감정 TOP</h2>
         <div id="emotionTop" class="muted">기록을 추가하면 표시됩니다.</div>
+
+        <h2>카테고리 TOP</h2>
+        <div id="categoryTop" class="muted">기록을 추가하면 표시됩니다.</div>
 
         <h2>한 줄 전략</h2>
         <div id="strategy" class="card" style="box-shadow:none; border:1px solid #eee; background:#fafafa;"></div>
@@ -212,12 +195,26 @@
   </div>
 
 <script>
+  // ===== storage =====
   const KEY = "spend_lite_v1";
-  const state = load() ?? { answers: Array(10).fill(3), logs: [] };
+  const state = load() ?? { answers: Array(10).fill(3), logs: [], uiMonth: "" };
 
   function load(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } }
   function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
 
+  // ===== helpers =====
+  const $ = (id)=>document.getElementById(id);
+
+  const today = new Date();
+  const iso = new Date(today.getTime() - today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+
+  function formatWon(n){ try { return Number(n).toLocaleString("ko-KR") + "원"; } catch { return n + "원"; } }
+  function escapeHtml(s){ return String(s ?? "").replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
+
+  function regretScore(satis, need){ return (5-Number(satis)) + (5-Number(need)); }
+  function getYYYYMM(dateStr){ return (dateStr && dateStr.length>=7) ? dateStr.slice(0,7) : ""; }
+
+  // ===== tabs =====
   document.querySelectorAll(".tab").forEach(btn=>{
     btn.addEventListener("click", ()=>{
       document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
@@ -231,6 +228,7 @@
     });
   });
 
+  // ===== diagnosis =====
   const questions = [
     { text:"스트레스를 받으면 소비로 기분을 푼다.", map:{R:1,E:1}},
     { text:"필요하지 않으면 웬만하면 사지 않는다.", map:{S:1,G:0.5}},
@@ -278,10 +276,10 @@
 
   const typeName = {R:"💎 보상형", S:"🌿 안정형", E:"🌊 감정형", G:"🎯 목표형"};
   const typeDesc = {
-    R:"스트레스/피로 상황에서 결제가 늘어나는 편. ‘보류 규칙’이 효과적.",
-    S:"계획과 안정감을 중시. 지출을 통제하지만 때로 ‘필요한 소비’도 미룰 수 있음.",
-    E:"기분/상황에 따라 소비가 흔들릴 수 있음. 감정 트리거를 파악하면 개선이 빠름.",
-    G:"목표 중심 소비. 성장/도구/학습에 지출이 몰릴 수 있으니 예산 프레임이 도움."
+    R:"스트레스/피로 상황에서 결제가 늘어나는 편. ‘48시간 보류’가 효과적.",
+    S:"계획과 안정감을 중시. 지출을 통제하지만 ‘필요한 소비’도 미룰 수 있음.",
+    E:"기분/상황에 따라 소비가 흔들릴 수 있음. 트리거 파악이 핵심.",
+    G:"목표 중심 소비. 성장/도구/학습에 지출이 몰릴 수 있어 예산 프레임이 도움."
   };
 
   document.getElementById("calcType").addEventListener("click", ()=>{
@@ -300,33 +298,23 @@
     `;
   });
 
-  const $ = (id)=>document.getElementById(id);
-
-  const today = new Date();
-  const iso = new Date(today.getTime() - today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  // ===== log input =====
   $("dDate").value = iso;
-
-  function regretScore(satis, need){ return (5-Number(satis)) + (5-Number(need)); }
 
   $("addRow").addEventListener("click", ()=>{
     const row = {
       date: $("dDate").value || iso,
       item: $("dItem").value.trim() || "기타",
       amount: Number($("dAmount").value || 0),
-      const row = {
-  date: $("dDate").value || iso,
-  item: $("dItem").value.trim() || "기타",
-  amount: Number($("dAmount").value || 0),
-  category: $("dCategory").value,
-  emotion: $("dEmotion").value,
-  satis: Number($("dSatis").value),
-  need: Number($("dNeed").value)
-};
+      category: $("dCategory").value,
       emotion: $("dEmotion").value,
       satis: Number($("dSatis").value),
       need: Number($("dNeed").value)
     };
-    if(!row.amount || row.amount < 0){ alert("금액을 입력해 주세요."); return; }
+    if(!row.amount || row.amount < 0){
+      alert("금액을 입력해 주세요.");
+      return;
+    }
     state.logs.unshift(row);
     save();
     $("dItem").value = "";
@@ -353,10 +341,11 @@
         <td>${r.date}</td>
         <td>${escapeHtml(r.item)}</td>
         <td class="right">${formatWon(r.amount)}</td>
-        <td>${r.emotion}</td>
+        <td>${escapeHtml(r.category ?? "-")}</td>
+        <td>${escapeHtml(r.emotion)}</td>
         <td>${r.satis} / ${r.need}</td>
         <td class="${high?"danger":"ok"}">${high?"높음":"낮음"} <span class="muted">(점수 ${rs})</span></td>
-        <td class="right"><button class="ghost" data-del="${idx}" style="padding:6px 10px;">삭제</button></td>
+        <td class="right"><button class="ghost" data-del="${idx}" style="padding:6px 10px;" type="button">삭제</button></td>
       `;
       tb.appendChild(tr);
     });
@@ -370,63 +359,59 @@
       });
     });
   }
-function getYYYYMM(dateStr){
-  // dateStr: "YYYY-MM-DD"
-  if(!dateStr || dateStr.length < 7) return "";
-  return dateStr.slice(0,7);
-}
 
-function buildMonthOptions(){
-  const sel = document.getElementById("monthSelect");
-  if(!sel) return;
+  // ===== report (month filter) =====
+  function buildMonthOptions(){
+    const sel = $("monthSelect");
+    if(!sel) return;
 
-  const months = new Set();
-  const nowMonth = iso.slice(0,7);
-  months.add(nowMonth);
+    const months = new Set();
+    const nowMonth = iso.slice(0,7);
+    months.add(nowMonth);
 
-  state.logs.forEach(r=>{
-    const m = getYYYYMM(r.date);
-    if(m) months.add(m);
-  });
+    state.logs.forEach(r=>{
+      const m = getYYYYMM(r.date);
+      if(m) months.add(m);
+    });
 
-  const sorted = Array.from(months).sort().reverse();
+    const sorted = Array.from(months).sort().reverse();
+    const prev = state.uiMonth || nowMonth;
 
-  // 기존 선택 유지
-  const prev = state.uiMonth || nowMonth;
+    sel.innerHTML = sorted.map(m => `<option value="${m}">${m}</option>`).join("");
+    sel.value = sorted.includes(prev) ? prev : nowMonth;
 
-  sel.innerHTML = sorted.map(m => `<option value="${m}">${m}</option>`).join("");
-
-  sel.value = sorted.includes(prev) ? prev : nowMonth;
-  state.uiMonth = sel.value;
-  save();
-
-  sel.onchange = () => {
     state.uiMonth = sel.value;
     save();
-    renderReport();
-  };
-}
 
-function getSelectedMonth(){
-  const sel = document.getElementById("monthSelect");
-  return sel?.value || (state.uiMonth || iso.slice(0,7));
-}
+    sel.onchange = () => {
+      state.uiMonth = sel.value;
+      save();
+      renderReport();
+    };
+  }
+
   function renderReport(){
-  buildMonthOptions();
-const selectedMonth = getSelectedMonth();
-const logs = state.logs.filter(r => getYYYYMM(r.date) === selectedMonth);
+    buildMonthOptions();
+    const selectedMonth = $("monthSelect")?.value || iso.slice(0,7);
+    const logs = state.logs.filter(r => getYYYYMM(r.date) === selectedMonth);
+
     const total = logs.reduce((a,r)=>a+r.amount, 0);
     const avgSatis = logs.length ? (logs.reduce((a,r)=>a+r.satis,0)/logs.length) : 0;
     const regretCnt = logs.filter(r=>regretScore(r.satis,r.need) >= 6).length;
     const regretRate = logs.length ? (regretCnt/logs.length)*100 : 0;
 
     const emoMap = {};
-    logs.forEach(r=> emoMap[r.emotion] = (emoMap[r.emotion]||0)+1 );
+    const catMap = {};
+    logs.forEach(r=>{
+      emoMap[r.emotion] = (emoMap[r.emotion]||0)+1;
+      catMap[r.category ?? "기타"] = (catMap[r.category ?? "기타"]||0)+1;
+    });
     const emoTop = Object.entries(emoMap).sort((a,b)=>b[1]-a[1])[0]?.[0] ?? "-";
+    const catTop = Object.entries(catMap).sort((a,b)=>b[1]-a[1])[0]?.[0] ?? "-";
 
     $("kpis").innerHTML = `
       <div class="card" style="box-shadow:none; border:1px solid #eee;">
-        <div class="muted">총 지출</div>
+        <div class="muted">총 지출 (${selectedMonth})</div>
         <div style="font-size:18px; font-weight:700;">${formatWon(total)}</div>
       </div>
       <div class="card" style="box-shadow:none; border:1px solid #eee;">
@@ -440,7 +425,11 @@ const logs = state.logs.filter(r => getYYYYMM(r.date) === selectedMonth);
     `;
 
     $("emotionTop").innerHTML = logs.length
-      ? `<span class="pill">TOP</span> <b>${emoTop}</b> (${emoMap[emoTop]}회) · 전체 ${logs.length}건`
+      ? `<span class="pill">TOP</span> <b>${escapeHtml(emoTop)}</b> (${emoMap[emoTop]}회) · ${logs.length}건`
+      : "기록을 추가하면 표시됩니다.";
+
+    $("categoryTop").innerHTML = logs.length
+      ? `<span class="pill">TOP</span> <b>${escapeHtml(catTop)}</b> (${catMap[catTop]}회) · ${logs.length}건`
       : "기록을 추가하면 표시됩니다.";
 
     const lines = [];
@@ -450,11 +439,47 @@ const logs = state.logs.filter(r => getYYYYMM(r.date) === selectedMonth);
       if(regretRate >= 25) lines.push("⚠ 후회율이 높아요 → 다음 달은 ‘48시간 보류 규칙’을 적용해보세요.");
       if(emoTop === "스트레스") lines.push("🧠 스트레스 소비가 최다예요 → 돈 대신 할 수 있는 ‘대체 행동 3가지’를 미리 정해두세요.");
       if(avgSatis && avgSatis < 3) lines.push("📉 만족도가 낮아요 → ‘목표형 소비(도구/학습/건강)’ 비율을 조금 늘려보세요.");
-      if(lines.length === 0) lines.push("✅ 전반적으로 안정적이에요 → 다음 달은 ‘후회 점수 6 이상’ 소비만 줄여도 체감이 커요.");
+      if(lines.length === 0) lines.push("✅ 전반적으로 안정적이에요 → ‘후회 점수 6 이상’ 소비만 줄여도 체감이 커요.");
     }
     $("strategy").innerHTML = lines.map(t=>`<div style="margin:6px 0;">${t}</div>`).join("");
   }
 
+  // ===== CSV =====
+  function toCsvValue(v){
+    const s = String(v ?? "");
+    if(/[",\n]/.test(s)){
+      return `"${s.replace(/"/g, '""')}"`;
+    }
+    return s;
+  }
+
+  function downloadCsv(){
+    const headers = ["date","item","amount","category","emotion","satis","need"];
+    const rows = state.logs.map(r => [
+      r.date, r.item, r.amount, (r.category ?? ""), r.emotion, r.satis, r.need
+    ]);
+
+    const csv = [
+      headers.join(","),
+      ...rows.map(row => row.map(toCsvValue).join(","))
+    ].join("\n");
+
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `spending-${iso}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    URL.revokeObjectURL(url);
+  }
+
+  document.getElementById("btnDownloadCsv")?.addEventListener("click", downloadCsv);
+
+  // ===== reset =====
   document.getElementById("resetAll").addEventListener("click", ()=>{
     if(confirm("진단/기록을 모두 초기화할까요?")){
       localStorage.removeItem(KEY);
@@ -462,47 +487,8 @@ const logs = state.logs.filter(r => getYYYYMM(r.date) === selectedMonth);
     }
   });
 
-  function formatWon(n){ try { return Number(n).toLocaleString("ko-KR") + "원"; } catch { return n + "원"; } }
-  function escapeHtml(s){ return s.replace(/[&<>"']/g, m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
-
+  // initial
   renderLogs();
-  // ===== CSV 다운로드 =====
-function toCsvValue(v){
-  const s = String(v ?? "");
-  if(/[",\n]/.test(s)){
-    return `"${s.replace(/"/g, '""')}"`;
-  }
-  return s;
-}
-
-function downloadCsv(){
-  const headers = ["date","item","amount","category","emotion","satis","need"];
-  const rows = state.logs.map(r => [
-    r.date, r.item, r.amount, (r.category ?? ""), r.emotion, r.satis, r.need
-  ]);
-
-  const csv = [
-    headers.join(","),
-    ...rows.map(row => row.map(toCsvValue).join(","))
-  ].join("\n");
-
-  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `spending-${iso}.csv`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-  URL.revokeObjectURL(url);
-}
-
-// 버튼이 있으면 연결
-document.getElementById("btnDownloadCsv")?.addEventListener("click", downloadCsv);
 </script>
 </body>
 </html>
-
-
