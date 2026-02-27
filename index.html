@@ -12,8 +12,21 @@
     h1 { font-size: 20px; margin: 0 0 10px; }
     h2 { font-size: 16px; margin: 18px 0 10px; }
     .tabs { display:flex; gap:8px; margin: 12px 0; flex-wrap: wrap; }
-    .tab { border:1px solid #ddd; background:#fff; padding:10px 12px; border-radius: 999px; cursor:pointer; }
-    .tab.active { border-color:#111; }
+   .tab {
+  border:1px solid #ddd;
+  background:#f1f1f1;
+  padding:10px 12px;
+  border-radius:999px;
+  cursor:pointer;
+  color:#111;
+  font-weight:600;
+}
+
+.tab.active {
+  border-color:#111;
+  background:#111;
+  color:#fff;
+}
     .row { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 720px){ .row{ grid-template-columns:1fr; } }
     label { display:block; font-size: 12px; margin: 10px 0 6px; color:#333; }
@@ -354,3 +367,4 @@
 </script>
 </body>
 </html>
+
