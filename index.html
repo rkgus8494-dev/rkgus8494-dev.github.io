@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>내 소비 점검 시스템</title>
+<style>
+body{font-family:system-ui;background:#f6f7f9;padding:30px}
+.card{max-width:600px;margin:auto;background:white;padding:20px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
+input,select,button{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ddd}
+button{background:#111;color:white;border:none}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>월간 소비 점검 시스템</h1>
+
+<label>금액</label>
+<input id="amount" type="number">
+
+<label>만족도 (1~5)</label>
+<select id="satis">
+<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+</select>
+
+<label>필요도 (1~5)</label>
+<select id="need">
+<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+</select>
+
+<button onclick="check()">후회 가능성 확인</button>
+
+<p id="result"></p>
+</div>
+
+<script>
+function check(){
+let s = document.getElementById("satis").value;
+let n = document.getElementById("need").value;
+let score = (5-s)+(5-n);
+if(score>=6){
+document.getElementById("result").innerHTML="⚠ 후회 가능성 높음 (점수 "+score+")";
+}else{
+document.getElementById("result").innerHTML="✅ 후회 가능성 낮음 (점수 "+score+")";
+}
+}
+</script>
+</body>
+</html>
