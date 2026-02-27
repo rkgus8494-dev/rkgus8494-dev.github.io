@@ -95,22 +95,56 @@
         </div>
 
         <div class="row">
-          <div>
-            <label>금액(원)</label>
-            <input id="dAmount" type="number" min="0" step="100" placeholder="예: 4500" />
-          </div>
-          <div>
-            <label>감정</label>
-            <select id="dEmotion">
-              <option value="스트레스">스트레스</option>
-              <option value="지루함">지루함</option>
-              <option value="설렘">설렘</option>
-              <option value="보상">보상</option>
-              <option value="필요">필요</option>
-              <option value="습관">습관</option>
-            </select>
-          </div>
-        </div>
+  <div>
+    <label>금액(원)</label>
+    <input id="dAmount" type="number" min="0" step="100" placeholder="예: 4500" />
+  </div>
+
+  <div>
+    <label>카테고리</label>
+    <select id="dCategory">
+      <option value="식비">식비</option>
+      <option value="카페/간식">카페/간식</option>
+      <option value="교통">교통</option>
+      <option value="쇼핑">쇼핑</option>
+      <option value="생활">생활</option>
+      <option value="건강">건강</option>
+      <option value="구독">구독</option>
+      <option value="기타" selected>기타</option>
+    </select>
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <label>감정</label>
+    <select id="dEmotion">
+      <option value="스트레스">스트레스</option>
+      <option value="지루함">지루함</option>
+      <option value="설렘">설렘</option>
+      <option value="보상">보상</option>
+      <option value="필요">필요</option>
+      <option value="습관">습관</option>
+    </select>
+  </div>
+
+  <div>
+    <label>만족도 (1~5)</label>
+    <select id="dSatis">
+      <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
+    </select>
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <label>필요도 (1~5)</label>
+    <select id="dNeed">
+      <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
+    </select>
+  </div>
+  <div></div>
+</div>
 
         <div class="row">
           <div>
@@ -156,6 +190,16 @@
       <!-- 리포트 -->
       <section id="report" style="display:none;">
         <h2>월간 리포트</h2>
+        <div class="row" style="margin-top:10px;">
+  <div>
+    <label>리포트 월</label>
+    <select id="monthSelect"></select>
+    <div class="muted">기본은 이번 달입니다.</div>
+  </div>
+  <div style="display:flex; align-items:flex-end; gap:8px;">
+    <button id="btnDownloadCsv" class="ghost" type="button" style="width:auto;">CSV 다운로드</button>
+  </div>
+</div>
         <div class="grid3" id="kpis"></div>
 
         <h2>감정 TOP</h2>
@@ -269,6 +313,15 @@
       date: $("dDate").value || iso,
       item: $("dItem").value.trim() || "기타",
       amount: Number($("dAmount").value || 0),
+      const row = {
+  date: $("dDate").value || iso,
+  item: $("dItem").value.trim() || "기타",
+  amount: Number($("dAmount").value || 0),
+  category: $("dCategory").value,
+  emotion: $("dEmotion").value,
+  satis: Number($("dSatis").value),
+  need: Number($("dNeed").value)
+};
       emotion: $("dEmotion").value,
       satis: Number($("dSatis").value),
       need: Number($("dNeed").value)
@@ -317,9 +370,51 @@
       });
     });
   }
+function getYYYYMM(dateStr){
+  // dateStr: "YYYY-MM-DD"
+  if(!dateStr || dateStr.length < 7) return "";
+  return dateStr.slice(0,7);
+}
 
+function buildMonthOptions(){
+  const sel = document.getElementById("monthSelect");
+  if(!sel) return;
+
+  const months = new Set();
+  const nowMonth = iso.slice(0,7);
+  months.add(nowMonth);
+
+  state.logs.forEach(r=>{
+    const m = getYYYYMM(r.date);
+    if(m) months.add(m);
+  });
+
+  const sorted = Array.from(months).sort().reverse();
+
+  // 기존 선택 유지
+  const prev = state.uiMonth || nowMonth;
+
+  sel.innerHTML = sorted.map(m => `<option value="${m}">${m}</option>`).join("");
+
+  sel.value = sorted.includes(prev) ? prev : nowMonth;
+  state.uiMonth = sel.value;
+  save();
+
+  sel.onchange = () => {
+    state.uiMonth = sel.value;
+    save();
+    renderReport();
+  };
+}
+
+function getSelectedMonth(){
+  const sel = document.getElementById("monthSelect");
+  return sel?.value || (state.uiMonth || iso.slice(0,7));
+}
   function renderReport(){
-    const logs = state.logs;
+  buildMonthOptions();
+const selectedMonth = getSelectedMonth();
+const logs = state.logs.filter(r => getYYYYMM(r.date) === selectedMonth);
     const total = logs.reduce((a,r)=>a+r.amount, 0);
     const avgSatis = logs.length ? (logs.reduce((a,r)=>a+r.satis,0)/logs.length) : 0;
     const regretCnt = logs.filter(r=>regretScore(r.satis,r.need) >= 6).length;
@@ -374,5 +469,37 @@
 </script>
 </body>
 </html>
+function toCsvValue(v){
+  const s = String(v ?? "");
+  // 쉼표/따옴표/줄바꿈 있으면 따옴표로 감싸기
+  if(/[",\n]/.test(s)){
+    return `"${s.replace(/"/g, '""')}"`;
+  }
+  return s;
+}
 
+function downloadCsv(){
+  const headers = ["date","item","amount","category","emotion","satis","need"];
+  const rows = state.logs.map(r => [
+    r.date, r.item, r.amount, r.category, r.emotion, r.satis, r.need
+  ]);
+
+  const csv = [
+    headers.join(","),
+    ...rows.map(row => row.map(toCsvValue).join(","))
+  ].join("\n");
+
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `spending-${iso}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  URL.revokeObjectURL(url);
+}
+document.getElementById("btnDownloadCsv")?.addEventListener("click", downloadCsv);
 
